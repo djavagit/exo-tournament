@@ -1,9 +1,11 @@
 package character;
 
+import item.Buckler;
 import item.Item;
 
 public class Swordsman extends Character {
     public Swordsman() {
+        super();
         hp = 100;
         damage = 5;
     }
@@ -14,7 +16,9 @@ public class Swordsman extends Character {
 
     @Override
     public Swordsman equip(String item) {
-        return null;
+        if (item.equals("buckler"))
+            items.add(new Buckler());
+        return this;
     }
 
     @Override
