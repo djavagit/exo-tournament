@@ -1,4 +1,7 @@
 package item;
 
-public class Axe implements Item {
+public class Axe extends Weapon {
+    public Axe() {
+        damage = 6;
+    }
 }

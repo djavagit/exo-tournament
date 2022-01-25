@@ -1,6 +1,6 @@
 package item;
 
-public class Buckler implements Item{
+public class Buckler {
     private int hp;
     private Boolean block;
 

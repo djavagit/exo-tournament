@@ -1,13 +1,14 @@
 package character;
 
+import item.Armor;
 import item.Buckler;
-import item.Item;
+import item.Sword;
 
 public class Swordsman extends Character {
     public Swordsman() {
         super();
         hp = 100;
-        damage = 5;
+        weapon = new Sword();
     }
 
     public Swordsman(String vicious) {
@@ -17,17 +18,9 @@ public class Swordsman extends Character {
     @Override
     public Swordsman equip(String item) {
         if (item.equals("buckler"))
-            items.add(new Buckler());
+            buckler = new Buckler();
+        if (item.equals("armor"))
+            armor = new Armor();
         return this;
-    }
-
-    @Override
-    public int getDamage() {
-        return damage;
-    }
-
-    @Override
-    public int hitPoints() {
-        return hp;
     }
 }

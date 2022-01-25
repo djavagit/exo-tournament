@@ -1,19 +1,17 @@
 package character;
 
+import item.Armor;
 import item.Axe;
 import item.Buckler;
-import item.Item;
+import item.Weapon;
 
-import java.util.ArrayList;
 
 public abstract class Character {
-    protected int damage;
+    protected Buckler buckler;
+    protected Armor armor;
+    protected Weapon weapon;
     protected int hp;
-    protected ArrayList<Item> items;
 
-    public Character() {
-        this.items = new ArrayList<Item>();
-    }
 
     public abstract Character equip(String item);
 
@@ -27,30 +25,36 @@ public abstract class Character {
     public void hit(Character enemy){
         Boolean willAttack = true;
         Buckler buckler = enemy.getBuckler();
+        int damageInflicted = getDamage();
 
+        //treating buckler
         if (buckler != null){
             if (buckler.getHp() <= 0)
                 enemy.destroyBuckler();
-            else {
+            else if(damageInflicted>0) {
                 willAttack = !buckler.getBlock();
                 buckler.takeHit(hasAxe());
             }
         }
 
+        //treating armors
+        if(hasArmor())
+            damageInflicted -= armor.getDamageInflictedReduction();
+        if (enemy.hasArmor()) {
+            damageInflicted -= enemy.getArmor().getDamageTakenReduction();
+        }
+
         if(willAttack)
-            enemy.takeDmg(getDamage());
+            enemy.takeDmg(damageInflicted);
     }
 
     private void destroyBuckler() {
-        for(Item i : items){
-            if (i instanceof Buckler) {
-                items.remove(i);
-                return;
-            }
-        }
+        buckler = null;
     }
 
     public void takeDmg(int damage){
+        if (damage<0)
+            damage = 0;
         if (damage > hitPoints()){
             hp = 0;
         } else {
@@ -59,20 +63,22 @@ public abstract class Character {
     }
 
     public Buckler getBuckler(){
-        for(Item i : items){
-            if (i instanceof Buckler)
-                return (Buckler) i;
-        }
-        return null;
+        return buckler;
     }
     public Boolean hasAxe(){
-        for(Item i : items){
-            if (i instanceof Axe)
-                return true;
-        }
-        return false;
+        return weapon instanceof Axe;
+    }
+    public Boolean hasArmor(){
+        return armor != null;
+    }
+    public Armor getArmor() {
+        return armor;
     }
 
-    public abstract int getDamage();
-    public abstract int hitPoints();
+    public int getDamage(){
+        return weapon.getDamage();
+    }
+    public int hitPoints(){
+        return hp;
+    }
 }
