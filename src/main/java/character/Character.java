@@ -16,9 +16,15 @@ public abstract class Character {
     public abstract Character equip(String item);
 
     public void engage(Character enemy){
+        int i = 1;
+        System.out.println(weapon instanceof Axe);
         while (hitPoints() > 0 && enemy.hitPoints() > 0){
+            System.out.println("tour " + i);
             hit(enemy);
+            System.out.println("s -> h Swordsman " + hitPoints() + ", Highlander " + enemy.hitPoints());
             enemy.hit(this);
+            System.out.println("s <- h Swordsman " + hitPoints() + ", Highlander " + enemy.hitPoints());
+            i++;
         }
     }
 

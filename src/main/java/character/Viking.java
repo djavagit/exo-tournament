@@ -17,6 +17,9 @@ public class Viking extends Character{
             buckler = new Buckler();
         if (item.equals("armor"))
             armor = new Armor();
+        if (item.equals("axe")){
+            weapon = new Axe();
+        }
         return this;
     }
 }
